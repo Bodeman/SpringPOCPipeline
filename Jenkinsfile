@@ -43,11 +43,11 @@ pipeline {
 				git url: "${workingGitURL}", branch: "${workingBranch}"
 			}
 		} 
-		stage('Starting Build') {
-            steps {
+		//stage('Starting Build') {
+        //    steps {
 				//slackSend (color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-			}
-		} 
+		//	}
+		//} 
        stage('Build') {
             steps {
 				script {
