@@ -1,24 +1,24 @@
 pipeline {
     agent any
     environment { 
-		try {
+		//try {
 			//Load parameters
-			properties([parameters([
-				string(name: 'mvnHome', defaultValue: "tool 'maven Config'", description: 'Location of maven'),
-				string(name: 'workingGitURL', defaultValue: 'https://github.com/Bodeman/Dev.git', description: 'Repository for git project. Typically https://github.com/[owner]/[projectname].git'),
-				string(name: 'workingBranch', defaultValue: 'errorTest', description: 'Branch of repository to build')
-			])])
+		//	properties([parameters([
+		//		string(name: 'mvnHome', defaultValue: "tool 'maven Config'", description: 'Location of maven'),
+		//		string(name: 'workingGitURL', defaultValue: 'https://github.com/Bodeman/Dev.git', description: 'Repository for git project. Typically https://github.com/[owner]/[projectname].git'),
+		//		string(name: 'workingBranch', defaultValue: 'errorTest', description: 'Branch of repository to build')
+		//	])])
 		
-		} catch(err) {
+		//} catch(err) {
 			//could not load variables
-			echo 'Could not load variables as parameters.'
-		}
+		//	echo 'Could not load variables as parameters.'
+		//}
 		
-        //mvnHome = tool 'Maven_Config' 
+        mvnHome = tool 'Maven_Config' 
 		
 		// GitHub setup
-		//workingGitURL= 'https://github.com/Bodeman/Dev.git'     
-		//workingBranch= 'errorTest'
+		workingGitURL= 'https://github.com/Bodeman/Dev.git'     
+		workingBranch= 'errorTest'
 		
 		//POM file locations for Maven
 		workingPOM = '/var/lib/jenkins/workspace/TestPipeline/SpringPOC'
