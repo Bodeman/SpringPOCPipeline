@@ -1,12 +1,24 @@
 pipeline {
     agent any
     environment { 
-	
-        mvnHome = tool 'Maven_Config' 
+		try {
+			//Load parameters
+			properties([parameters([
+				string(name: 'mvnHome', defaultValue: "tool 'maven Config'", description: 'Location of maven'),
+				string(name: 'workingGitURL', defaultValue: 'https://github.com/Bodeman/Dev.git', description: 'Repository for git project. Typically https://github.com/[owner]/[projectname].git'),
+				string(name: 'workingBranch', defaultValue: 'errorTest', description: 'Branch of repository to build')
+			])])
+		
+		} catch(err) {
+			//could not load variables
+			echo 'Could not load variables as parameters.'
+		}
+		
+        //mvnHome = tool 'Maven_Config' 
 		
 		// GitHub setup
-		workingGitURL= 'https://github.com/CA-MMISDigitalServices/Dev.git'     
-		workingBranch= 'errorTest'
+		//workingGitURL= 'https://github.com/Bodeman/Dev.git'     
+		//workingBranch= 'errorTest'
 		
 		//POM file locations for Maven
 		workingPOM = '/var/lib/jenkins/workspace/TestPipeline/SpringPOC'
@@ -33,7 +45,7 @@ pipeline {
 		} 
 		stage('Starting Build') {
             steps {
-				slackSend (color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+				//slackSend (color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
 			}
 		} 
        stage('Build') {
