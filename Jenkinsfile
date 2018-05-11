@@ -64,24 +64,24 @@ pipeline {
 				failure {
 					echo 'Build Stage failure'
 					script {
-						testIssue = [fields: [ project: [key: "${workingJiraProject}"],
+						//testIssue = [fields: [ project: [key: "${workingJiraProject}"],
 									summary: 'Jenkins Build Failure.',
 									description: "Jenkins Build Failure -  Job name: '${env.JOB_NAME} - Build Number: ${env.BUILD_NUMBER}  URL: ${env.BUILD_URL}'",
 									priority: [name: 'Highest'],
 									issuetype: [name: 'Bug']]]
 
-						response = jiraNewIssue issue: testIssue, site: 'CAMMIS'
+						//response = jiraNewIssue issue: testIssue, site: 'CAMMIS'
 
-						echo response.successful.toString()
-						echo response.data.toString()
+						//echo response.successful.toString()
+						//echo response.data.toString()
 						
-						slackSend (color: '#FFFF00', message: "Failed: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+						//slackSend (color: '#FFFF00', message: "Failed: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
 
 					} 
 				}
 				success {
 					echo 'Build Stage Success'
-					slackSend (color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+					//slackSend (color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
 				}	
 			} 
         } 
