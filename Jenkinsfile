@@ -38,6 +38,7 @@ pipeline {
 		// Jira project setup
 		workingJiraProject ='PTP'
 		loglevel = 'INFO'
+		notify_channel = 'CONSOLE'
     }
     stages {
     	stage('Preparation') {
@@ -48,8 +49,8 @@ pipeline {
 		stage('Starting Build') {
             steps {
 				script {
-				notifications "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
-				log "${loglevel}", "INFO", "Notifications ran"
+				notifications "$[notify_channel}", "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
+				logger "${loglevel}", "INFO", "Notifications ran"
 				}
 			}
 		} 
@@ -63,7 +64,7 @@ pipeline {
             }
             post {
                 always {
-                    log "${loglevel}", "INFO", "Build Stage always"
+                    logger "${loglevel}", "INFO", "Build Stage always"
 
                 }
 			} 
@@ -84,7 +85,7 @@ pipeline {
 			}
 			post {
                 always {
-                    log "${loglevel}", "DEBUG", "SonarQube Analysis  Done"
+                    logger "${loglevel}", "DEBUG", "SonarQube Analysis  Done"
                 }
 				failure {
 					echo 'SonarQube Analysis  failure'
