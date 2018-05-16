@@ -44,14 +44,7 @@ pipeline {
     	stage('Preparation') {
 			steps {
 				git url: "${workingGitURL}", branch: "${workingBranch}"
-			}
-			post{
-			failure {
 				script {logger "${loglevel}", "WARN", "Preparation Stage failed"}
-				}
-			success {
-				script {logger "${loglevel}", "INFO", "Preparation Stage succeeded"}
-				}
 			}
 		} 
 		stage('Starting Build') {
