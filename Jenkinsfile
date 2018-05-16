@@ -45,12 +45,12 @@ pipeline {
 				git url: "${workingGitURL}", branch: "${workingBranch}"
 			}
 		} 
-		//stage('Starting Build') {
-        //    steps {
+		stage('Starting Build') {
+            steps {
 				notifications "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
 				log.info 'Notifications ran'
-		//	}
-		//} 
+			}
+		} 
        stage('Build') {
             steps {
 				script {
