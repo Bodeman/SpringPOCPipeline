@@ -37,7 +37,7 @@ pipeline {
 		
 		// Jira project setup
 		workingJiraProject ='PTP'
-		loglevel = 'INFO'
+		loglevel = 'DEBUG'
 		notify_channel = 'CONSOLE'
     }
     stages {
@@ -50,7 +50,7 @@ pipeline {
             steps {
 				script {
 				notifications "${notify_channel}", "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
-				logger "${loglevel}", "INFO", "Notifications ran"
+				logger "${loglevel}", "DEBUG", "Notifications ran"
 				}
 			}
 		} 
@@ -63,8 +63,12 @@ pipeline {
 				}
             }
             post {
-                always {
-                    logger "${loglevel}", "INFO", "Build Stage always"
+            failure {
+                    logger "${loglevel}", "WARN", "Build Stage failed"
+
+                }
+			always {
+                    logger "${loglevel}", "DEBUG", "Build Stage always"
 
                 }
 			} 
@@ -88,9 +92,9 @@ pipeline {
                     logger "${loglevel}", "DEBUG", "SonarQube Analysis  Done"
                 }
 				failure {
-					echo 'SonarQube Analysis  failure'
+                    logger "${loglevel}", "WARN", "SonarQube Analysis Failed"
 					script {
-						echo 'AWS Code Deploy  failure'
+						logger "${loglevel}", "WARN", "AWS Code Deploy failed"
 						testIssue = [fields: [ project: [key: "${workingJiraProject}"],
 									summary: 'Jenkins Build Failure.',
 									description: "Jenkins Build Failed - SonarQube Analysis Failed -  Job name: '${env.JOB_NAME} - Build Number: ${env.BUILD_NUMBER}  URL: ${env.BUILD_URL}'",
@@ -106,7 +110,7 @@ pipeline {
 					}
 				}
 				success {
-					echo 'SonarQube Analysis Success'
+					logger "${loglevel}", "INFO", "SonarQube Analysis ran"
 				}	
 			}
 		} 
