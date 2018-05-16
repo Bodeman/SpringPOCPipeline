@@ -49,7 +49,7 @@ pipeline {
 		stage('Starting Build') {
             steps {
 				script {
-				notifications "$[notify_channel}", "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
+				notifications "${notify_channel}", "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
 				logger "${loglevel}", "INFO", "Notifications ran"
 				}
 			}
