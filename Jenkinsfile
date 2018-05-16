@@ -45,13 +45,18 @@ pipeline {
 			steps {
 				git url: "${workingGitURL}", branch: "${workingBranch}"
 			}
+			post{
+			failure {
+				script {logger "${loglevel}", "WARN", "Preparation Stage failed"}
+				}
+			success {
+				script {logger "${loglevel}", "INFO", "Preparation Stage succeeded"}
+				}
+			}
 		} 
 		stage('Starting Build') {
             steps {
-				script {
 				notifications "${notify_channel}", "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
-				logger "${loglevel}", "DEBUG", "Notifications ran"
-				}
 			}
 		} 
        stage('Build') {
