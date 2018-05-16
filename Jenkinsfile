@@ -43,8 +43,9 @@ pipeline {
     stages {
     	stage('Preparation') {
 			steps {
+				script {logger "${loglevel}", "DEBUG", "Attempting pull of development code to compile"}
 				git url: "${workingGitURL}", branch: "${workingBranch}"
-				script {logger "${loglevel}", "WARN", "Preparation Stage failed"}
+				script {logger "${loglevel}", "WARN", "Preparation Stage failed"}				
 			}
 		} 
 		stage('Starting Build') {
