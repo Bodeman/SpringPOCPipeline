@@ -1,3 +1,5 @@
+@Library('utilities') _
+
 pipeline {
     agent any
     environment { 
@@ -45,7 +47,8 @@ pipeline {
 		} 
 		//stage('Starting Build') {
         //    steps {
-				//slackSend (color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+				notifications "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
+				log.info 'Notifications ran'
 		//	}
 		//} 
        stage('Build') {
