@@ -49,7 +49,7 @@ pipeline {
             steps {
 				script {
 				notifications "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
-				log "${loglevel}", "INFO", 'Notifications ran'
+				log "${loglevel}", "INFO", "Notifications ran"
 				}
 			}
 		} 
@@ -63,7 +63,7 @@ pipeline {
             }
             post {
                 always {
-                    log "${loglevel}", "INFO", 'Build Stage always'
+                    log "${loglevel}", "INFO", "Build Stage always"
 
                 }
 			} 
@@ -84,7 +84,7 @@ pipeline {
 			}
 			post {
                 always {
-                    log "${loglevel}", "DEBUG", 'SonarQube Analysis  Done'
+                    log "${loglevel}", "DEBUG", "SonarQube Analysis  Done"
                 }
 				failure {
 					echo 'SonarQube Analysis  failure'
