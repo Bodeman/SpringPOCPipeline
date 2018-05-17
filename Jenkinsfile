@@ -55,6 +55,7 @@ pipeline {
     	stage('Preparation') {
 			steps {
 				script {
+					try {
 					workingGitURL = workingconfigs.seturl Environment_Config
 					workingBranch = workingconfigs.setbranch Environment_Config
 					workingPOM = workingconfigs.setPOM Environment_Config
@@ -64,6 +65,9 @@ pipeline {
 					logger "${loglevel}", "DEBUG", "workingPOM = ${workingPOM}"
 					logger "${loglevel}", "DEBUG", "workingJenkinsDir = ${workingJenkinsDir}"
 					pullproject workingGitURL, workingBranch, continueBuild
+					}
+					catch (e) {
+						logger "${loglevel}", "ERROR", ": ${e}"}
 					}
 				}
 		}
