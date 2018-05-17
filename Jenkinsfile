@@ -37,8 +37,15 @@ pipeline {
 		
 		// Jira project setup
 		workingJiraProject ='PTP'
+		
+		//If the Jenkins master is windows || Linux
+		Jenkins_Master = "Windows"
+		
+		//Added variables for shared libraries
 		loglevel = 'DEBUG'
 		notify_channel = 'CONSOLE'
+		
+		//Early abort variable
 		continueBuild = true
     }
     stages {
@@ -76,8 +83,11 @@ pipeline {
             steps {
 				script {
 //					input message: 'Approve deployment?'
-					if(isWindows()) {batch "'${mvnHome}/bin/mvn' -X -B --file '${workingPOM}' -Dmaven.test.failure.ignore clean install cobertura:cobertura -Dcobertura.report.format=xml"} else {sh "'${mvnHome}/bin/mvn' -X -B --file '${workingPOM}' -Dmaven.test.failure.ignore clean install cobertura:cobertura -Dcobertura.report.format=xml"}
-
+					if(Jenkins_Master == "Windows") {
+							batch "'${mvnHome}/bin/mvn' -X -B --file '${workingPOM}' -Dmaven.test.failure.ignore clean install cobertura:cobertura -Dcobertura.report.format=xml"
+						} else {
+							sh "'${mvnHome}/bin/mvn' -X -B --file '${workingPOM}' -Dmaven.test.failure.ignore clean install cobertura:cobertura -Dcobertura.report.format=xml"
+						}
 				}
             }
             post {
