@@ -25,7 +25,7 @@ pipeline {
 		Jenkins_Master = "Windows"
 		
 		// GitHub setup
-		workingGitURL = ""
+		workingGitURL = ''
 		workingBranch= 'errorTest'
 		
 		//POM file locations for Maven
