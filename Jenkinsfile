@@ -57,11 +57,13 @@ pipeline {
 		} 
 		stage('Starting Build') {
             steps {
-				if(!continueBuild) {
-				    currentBuild.result = 'ABORTED'
-					error('Stopping early…')
+				script{
+					if(!continueBuild) {
+						currentBuild.result = 'ABORTED'
+						error('Stopping early…')
+					}
+					notifications "${notify_channel}", "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
 				}
-				notifications "${notify_channel}", "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
 			}
 		} 
        stage('Build') {
