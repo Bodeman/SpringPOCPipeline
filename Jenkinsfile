@@ -43,6 +43,7 @@ pipeline {
     stages {
     	stage('Preparation') {
 			steps {
+					script {
 					try {
 						echo 'Trying this'
 						logger "${loglevel}", "WARN", "Preparation Stage failed"
@@ -52,6 +53,7 @@ pipeline {
 				echo 'Trying this 2'
 				//git url: "${workingGitURL}", branch: "${workingBranch}"
 				script {logger "${loglevel}", "WARN", "Preparation Stage failed"}				
+				}
 			}
 		} 
 		stage('Starting Build') {
