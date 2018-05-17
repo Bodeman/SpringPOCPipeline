@@ -39,6 +39,7 @@ pipeline {
 		workingJiraProject ='PTP'
 		loglevel = 'DEBUG'
 		notify_channel = 'CONSOLE'
+		continueBuild = true
     }
     stages {
     	stage('Preparation') {
@@ -61,7 +62,7 @@ pipeline {
 					try{
 					if(!continueBuild) {
 						currentBuild.result = 'ABORTED'
-						error('Stopping early…')
+						error('Stopping early due to critical failure.')
 					}
 					notifications "${notify_channel}", "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
 					}
