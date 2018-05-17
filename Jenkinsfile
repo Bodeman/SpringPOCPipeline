@@ -58,7 +58,7 @@ pipeline {
 					workingGitURL = workingconfigs.seturl Environment_Config
 					workingBranch = workingconfigs.setbranch Environment_Config
 					workingPOM = workingconfigs.setPOM Environment_Config
-					workingJenkinsDir = workingconfigs.setJenkinsDir Environment_Config
+					workingJenkinsDir = env.WORKSPACE
 					pullproject workingGitURL, workingBranch, continueBuild
 					}
 				}
