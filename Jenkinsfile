@@ -49,7 +49,7 @@ pipeline {
 						git url: "${workingGitURL}", branch: "${workingBranch}"
 					}
 					catch (e) {
-						logger "${loglevel}", "ERROR", "Pull failed. Error[${e}"
+						logger "${loglevel}", "ERROR", "Pull failed. Error[${e}]"
 						continueBuild = false
 						}
 				}
@@ -58,11 +58,16 @@ pipeline {
 		stage('Starting Build') {
             steps {
 				script{
+					try{
 					if(!continueBuild) {
 						currentBuild.result = 'ABORTED'
 						error('Stopping early…')
 					}
 					notifications "${notify_channel}", "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
+					}
+					catch (e) {
+						logger "${loglevel}", "ERROR", "Error[${e}]"
+					}
 				}
 			}
 		} 
