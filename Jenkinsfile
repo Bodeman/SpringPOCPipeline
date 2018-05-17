@@ -43,14 +43,11 @@ pipeline {
     stages {
     	stage('Preparation') {
 			steps {
-				script {
 					try {
 						echo 'Trying this'
-						notifications "${notify_channel}", "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
+						logger "${loglevel}", "WARN", "Preparation Stage failed"
 					}
 					catch (e) {echo "Error ${e}"}
-					finally {echo 'Failed logger'}
-				}
 
 				echo 'Trying this 2'
 				//git url: "${workingGitURL}", branch: "${workingBranch}"
