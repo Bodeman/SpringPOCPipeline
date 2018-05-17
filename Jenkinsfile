@@ -53,8 +53,7 @@ pipeline {
 			steps {
 					pullproject workingGitURL, workingBranch, continueBuild
 				}
-			}
-		} 
+		}
 		stage('Starting Build') {
             steps {
 				script{
