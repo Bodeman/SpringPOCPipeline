@@ -46,8 +46,9 @@ pipeline {
 				script {
 					try {
 						echo 'Trying this'
-						logger "${loglevel}", "DEBUG", "Attempting pull of development code to compile"
+						notifications "${notify_channel}", "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
 					}
+					catch (e) {echo "Error ${e}"}
 					finally {echo 'Failed logger'}
 				}
 
