@@ -25,7 +25,7 @@ pipeline {
 		Jenkins_Master = "Windows"
 		
 		// GitHub setup
-		workingGitURL= EnvVars.LoadWorkingGitURL Environment_Config
+		workingGitURL = ""
 		workingBranch= 'errorTest'
 		
 		//POM file locations for Maven
@@ -54,6 +54,7 @@ pipeline {
     stages {
     	stage('Preparation') {
 			steps {
+					EnvVars.LoadWorkingGitURL Environment_Config
 					pullproject workingGitURL, workingBranch, continueBuild
 				}
 		}
