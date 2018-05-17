@@ -20,13 +20,12 @@ pipeline {
 		
 		//Toggle between environment configurations using this value. 0 = CAMMIS, 1 = Bode
 		Environment_Config = 1
-		def Vars = new org.cammis.EnvVars()
 		
 		//If the Jenkins master is windows || Linux
 		Jenkins_Master = "Windows"
 		
 		// GitHub setup
-		workingGitURL= Vars.LoadWorkingGitURL(Environment_Config)
+		workingGitURL= EnvVars.LoadWorkingGitURL(Environment_Config)
 		workingBranch= 'errorTest'
 		
 		//POM file locations for Maven
