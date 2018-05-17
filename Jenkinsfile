@@ -59,7 +59,7 @@ pipeline {
 					workingGitURL = workingconfigs.seturl Environment_Config
 					workingBranch = workingconfigs.setbranch Environment_Config
 					workingPOM = workingconfigs.setPOM Environment_Config
-					workingJenkinsDir = env.WORKSPACE
+					workingJenkinsDir = workingconfigs.setJenkinsDir Environment_Config
 					logger "${loglevel}", "DEBUG", "workingGitURL = ${workingGitURL}"
 					logger "${loglevel}", "DEBUG", "workingBranch = ${workingBranch}"
 					logger "${loglevel}", "DEBUG", "workingPOM = ${workingPOM}"
