@@ -60,7 +60,6 @@ pipeline {
 					catch (e) {
 						logger "${loglevel}", "ERROR", "Pull failed. Error[${e}]"
 						continueBuild = false
-						throw
 						}
 				}
 			}
