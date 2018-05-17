@@ -44,11 +44,15 @@ pipeline {
     	stage('Preparation') {
 			steps {
 				script {
-					echo 'Trying this'
-				logger "${loglevel}", "DEBUG", "Attempting pull of development code to compile"
+					try {
+						echo 'Trying this'
+						logger "${loglevel}", "DEBUG", "Attempting pull of development code to compile"
+					}
+					finally {echo 'Failed logger'}
 				}
-									echo 'Trying this 2'
-				git url: "${workingGitURL}", branch: "${workingBranch}"
+
+				echo 'Trying this 2'
+				//git url: "${workingGitURL}", branch: "${workingBranch}"
 				script {logger "${loglevel}", "WARN", "Preparation Stage failed"}				
 			}
 		} 
@@ -61,7 +65,7 @@ pipeline {
             steps {
 				script {
 //					input message: 'Approve deployment?'
-					sh "'${mvnHome}/bin/mvn' -X -B --file '${workingPOM}' -Dmaven.test.failure.ignore clean install cobertura:cobertura -Dcobertura.report.format=xml"
+					if(isWindows()) {batch "'${mvnHome}/bin/mvn' -X -B --file '${workingPOM}' -Dmaven.test.failure.ignore clean install cobertura:cobertura -Dcobertura.report.format=xml"} else {sh "'${mvnHome}/bin/mvn' -X -B --file '${workingPOM}' -Dmaven.test.failure.ignore clean install cobertura:cobertura -Dcobertura.report.format=xml"}
 
 				}
             }
