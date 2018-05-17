@@ -54,8 +54,7 @@ pipeline {
     stages {
     	stage('Preparation') {
 			steps {
-					def Vars = new EnvVars()
-					Vars.LoadWorkingGitURL Environment_Config
+					EnvVars Environment_Config
 					pullproject workingGitURL, workingBranch, continueBuild
 				}
 		}
