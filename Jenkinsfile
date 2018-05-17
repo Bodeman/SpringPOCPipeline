@@ -51,16 +51,7 @@ pipeline {
     stages {
     	stage('Preparation') {
 			steps {
-					pullproject workingGitURL, workingBranch
-					script {
-					try {
-						logger "${loglevel}", "DEBUG", "Attempting git pull ${workingGitURL}, branch: ${workingBranch}"
-						git url: "${workingGitURL}", branch: "${workingBranch}"
-					}
-					catch (e) {
-						logger "${loglevel}", "ERROR", "Pull failed. Error[${e}]"
-						continueBuild = false
-						}
+					pullproject workingGitURL, workingBranch, continueBuild
 				}
 			}
 		} 
