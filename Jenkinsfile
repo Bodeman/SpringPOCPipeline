@@ -26,15 +26,15 @@ pipeline {
 		
 		// GitHub setup
 		workingGitURL = ''
-		workingBranch= 'errorTest'
+		workingBranch= ''
 		
 		//POM file locations for Maven
-		workingPOM = '/var/lib/jenkins/workspace/TestPipeline/SpringPOC'
+		workingPOM = ''
 		
 		// Jenkins setup 
 		workingJob= 'TestPipeline'
 		workingProject= 'SpringPOC'
-		workingJenkinsDir= '/var/lib/jenkins/workspace'
+		workingJenkinsDir= ''
 		
 		// AWS code Deploy setup
 		AWSCDapplicationName= 'SpringPOC'
@@ -56,6 +56,9 @@ pipeline {
 			steps {
 				script {
 					workingGitURL = workingconfigs.seturl Environment_Config
+					workingBranch = workingconfigs.setbranch Environment_Config
+					workingPOM = workingconfigs.setPOM Environment_Config
+					workingJenkinsDir = workingconfigs.setJenkinsDir Environment_Config
 					pullproject workingGitURL, workingBranch, continueBuild
 					}
 				}
