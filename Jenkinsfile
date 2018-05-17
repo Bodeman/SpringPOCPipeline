@@ -54,7 +54,7 @@ pipeline {
     stages {
     	stage('Preparation') {
 			steps {
-					EnvVars Environment_Config
+					workingGitURL = workingconfigs.seturl Environment_Config
 					pullproject workingGitURL, workingBranch, continueBuild
 				}
 		}
