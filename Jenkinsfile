@@ -45,19 +45,22 @@ pipeline {
 			steps {
 					script {
 					try {
-						echo 'Trying this'
-						logger "${loglevel}", "WARN", "Preparation Stage failed"
+						logger "${loglevel}", "DEBUG", "Attempting git pull ${workingGitURL}, branch: ${workingBranch}"
+						git url: "${workingGitURL}", branch: "${workingBranch}"
 					}
-					catch (e) {echo "Error ${e}"}
-
-				echo 'Trying this 2'
-				//git url: "${workingGitURL}", branch: "${workingBranch}"
-				script {logger "${loglevel}", "WARN", "Preparation Stage failed"}				
+					catch (e) {
+						logger "${loglevel}", "ERROR", "Pull failed. Error[${e}"
+						continueBuild = false
+						}
 				}
 			}
 		} 
 		stage('Starting Build') {
             steps {
+				if(!continueBuild) {
+				    currentBuild.result = 'ABORTED'
+					error('Stopping early…')
+				}
 				notifications "${notify_channel}", "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
 			}
 		} 
