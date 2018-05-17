@@ -59,6 +59,10 @@ pipeline {
 					workingBranch = workingconfigs.setbranch Environment_Config
 					workingPOM = workingconfigs.setPOM Environment_Config
 					workingJenkinsDir = env.WORKSPACE
+					logger "${loglevel}", "DEBUG", "workingGitURL = ${workingGitURL}"
+					logger "${loglevel}", "DEBUG", "workingBranch = ${workingBranch}"
+					logger "${loglevel}", "DEBUG", "workingPOM = ${workingPOM}"
+					logger "${loglevel}", "DEBUG", "workingJenkinsDir = ${workingJenkinsDir}"
 					pullproject workingGitURL, workingBranch, continueBuild
 					}
 				}
