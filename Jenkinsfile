@@ -18,6 +18,9 @@ pipeline {
 		
         mvnHome = tool 'Maven_Config' 
 		
+		//If the Jenkins master is windows || Linux
+		Jenkins_Master = "Windows"
+		
 		// GitHub setup
 		workingGitURL= 'https://github.com/Bodeman/Dev.git'     
 		workingBranch= 'errorTest'
@@ -38,9 +41,6 @@ pipeline {
 		// Jira project setup
 		workingJiraProject ='PTP'
 		
-		//If the Jenkins master is windows || Linux
-		Jenkins_Master = "Windows"
-		
 		//Added variables for shared libraries
 		loglevel = 'DEBUG'
 		notify_channel = 'CONSOLE'
@@ -51,6 +51,7 @@ pipeline {
     stages {
     	stage('Preparation') {
 			steps {
+					pullproject workingGitURL, workingBranch
 					script {
 					try {
 						logger "${loglevel}", "DEBUG", "Attempting git pull ${workingGitURL}, branch: ${workingBranch}"
@@ -59,6 +60,7 @@ pipeline {
 					catch (e) {
 						logger "${loglevel}", "ERROR", "Pull failed. Error[${e}]"
 						continueBuild = false
+						throw
 						}
 				}
 			}
@@ -84,7 +86,7 @@ pipeline {
 				script {
 //					input message: 'Approve deployment?'
 					if(Jenkins_Master == "Windows") {
-							batch "'${mvnHome}/bin/mvn' -X -B --file '${workingPOM}' -Dmaven.test.failure.ignore clean install cobertura:cobertura -Dcobertura.report.format=xml"
+							bat "'${mvnHome}/bin/mvn' -X -B --file '${workingPOM}' -Dmaven.test.failure.ignore clean install cobertura:cobertura -Dcobertura.report.format=xml"
 						} else {
 							sh "'${mvnHome}/bin/mvn' -X -B --file '${workingPOM}' -Dmaven.test.failure.ignore clean install cobertura:cobertura -Dcobertura.report.format=xml"
 						}
