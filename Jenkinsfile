@@ -90,12 +90,10 @@ pipeline {
        stage('Build') {
             steps {
 				script {
+				//TODO: move to function for building. put in try block
+				//TODO: diable the calls to CAMMIS infrastructure
 //					input message: 'Approve deployment?'
-					if(Jenkins_Master == "Windows") {
-							bat "mvn -X -B --file ${workingPOM} -Dmaven.test.failure.ignore clean install cobertura:cobertura -Dcobertura.report.format=xml"
-						} else {
-							sh "'${mvnHome}/bin/mvn' -X -B --file '${workingPOM}' -Dmaven.test.failure.ignore clean install cobertura:cobertura -Dcobertura.report.format=xml"
-						}
+					build Jenkins_Master, mvnHome, workingPOM
 				}
             }
             post {
