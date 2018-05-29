@@ -95,7 +95,7 @@ pipeline {
 				script {
 				//TODO: diable the calls to CAMMIS infrastructure
 //					input message: 'Approve deployment?'
-					build Jenkins_Master, mvnHome, workingPOM, Compile_Disable
+					build Jenkins_Master, mvnHome, workingPOM, Compile_Disable, loglevel
 				}
             }
             post {
