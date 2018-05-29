@@ -45,7 +45,7 @@ pipeline {
 		workingJiraProject ='PTP'
 		
 		//Added variables for shared libraries
-		loglevel = 'DEBUG'
+		loglevel = 'WARNING'
 		notify_channel = 'CONSOLE'
 		
 		//Early abort variable
