@@ -50,6 +50,9 @@ pipeline {
 		
 		//Early abort variable
 		continueBuild = true
+		
+		//Disable compile set to TRUE
+		Compile_Disable=TRUE
     }
     stages {
     	stage('Preparation') {
@@ -90,10 +93,9 @@ pipeline {
        stage('Build') {
             steps {
 				script {
-				//TODO: move to function for building. put in try block
 				//TODO: diable the calls to CAMMIS infrastructure
 //					input message: 'Approve deployment?'
-					build Jenkins_Master, mvnHome, workingPOM
+					build Jenkins_Master, mvnHome, workingPOM, Compile_Disable
 				}
             }
             post {
