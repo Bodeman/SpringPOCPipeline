@@ -117,7 +117,7 @@ pipeline {
 		stage('SonarQube analysis') { 
     		steps { 
 				withSonarQubeEnv('SonarQubeServer') {
-					sonar Jenkins_Master, SonarHost
+					sonar Jenkins_Master, SonarHost, workingProject, workingJenkinsDir, workingJob
 				}
 			}
 			post {
