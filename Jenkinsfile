@@ -36,6 +36,10 @@ pipeline {
 		workingProject= 'SpringPOC'
 		workingJenkinsDir= ''
 		
+		//Sonar configurations
+		SonarHost='http://localhost:9000/'
+		SonarScanner=''
+		
 		// AWS code Deploy setup
 		AWSCDapplicationName= 'SpringPOC'
 		AWSCDDeploymentGroupName= 'SpringPOCDG'
@@ -113,14 +117,7 @@ pipeline {
 		stage('SonarQube analysis') { 
     		steps { 
 				withSonarQubeEnv('SonarQubeServer') {
-					sh '/var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/Sonar/bin/sonar-scanner' +
-					' -Dsonar.host.url=http://158.96.16.211:9000/' + 
-					' -Dsonar.projectVersion=1.0' +
-					' -Dsonar.sourceEncoding=UTF-8' +
-					' -Dsonar.projectKey="${workingJob}"' +
-					' -Dsonar.java.binaries="${workingJenkinsDir}"/"${workingJob}"/"${workingProject}"/target/classes' +
-					' -Dsonar.sources="${workingProject}"/src' +
-					' -Dsonar.projectBaseDir="${workingJenkinsDir}"/"${workingJob}"'
+					sonar Jenkins_Master, SonarHost
 				}
 			}
 			post {
@@ -129,21 +126,21 @@ pipeline {
                 }
 				failure {
                     logger "${loglevel}", "WARN", "SonarQube Analysis Failed"
-					script {
-						logger "${loglevel}", "WARN", "AWS Code Deploy failed"
-						testIssue = [fields: [ project: [key: "${workingJiraProject}"],
-									summary: 'Jenkins Build Failure.',
-									description: "Jenkins Build Failed - SonarQube Analysis Failed -  Job name: '${env.JOB_NAME} - Build Number: ${env.BUILD_NUMBER}  URL: ${env.BUILD_URL}'",
-									priority: [name: 'Highest'],
-									issuetype: [name: 'Bug']]]
+					//script {
+						//logger "${loglevel}", "WARN", "AWS Code Deploy failed"
+						//testIssue = [fields: [ project: [key: "${workingJiraProject}"],
+						//			summary: 'Jenkins Build Failure.',
+						//			description: "Jenkins Build Failed - SonarQube Analysis Failed -  Job name: '${env.JOB_NAME} - Build Number: ${env.BUILD_NUMBER}  URL: ${env.BUILD_URL}'",
+						//			priority: [name: 'Highest'],
+						//			issuetype: [name: 'Bug']]]
 
-						response = jiraNewIssue issue: testIssue, site: 'CAMMIS'
+						//response = jiraNewIssue issue: testIssue, site: 'CAMMIS'
 
-						echo response.successful.toString()
-						echo response.data.toString()
+						//echo response.successful.toString()
+						//echo response.data.toString()
 						
-						slackSend (color: '#FFFF00', message: "Failed: Job - SonarQube Analysis Failed '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-					}
+						//slackSend (color: '#FFFF00', message: "Failed: Job - SonarQube Analysis Failed '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+					//}
 				}
 				success {
 					logger "${loglevel}", "INFO", "SonarQube Analysis ran"
