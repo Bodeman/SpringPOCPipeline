@@ -52,7 +52,7 @@ pipeline {
 		continueBuild = true
 		
 		//Disable compile set to TRUE
-		Compile_Disable=TRUE
+		Compile_Disable = true
     }
     stages {
     	stage('Preparation') {
